@@ -2,11 +2,12 @@
 
 class User extends DbConnect {
 
-public function test(){
+public function sendMessage( $name , $email , $message , $subject ){
+echo $message;
 
-	echo 'Class is loaded.';
-}
+}// sendMessage
 
-}
+
+}// User
 
 
