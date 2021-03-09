@@ -3,7 +3,10 @@ require_once 'include/db.inc.php';
 require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
 
+echo '<pre>';
 
+print_r($_SESSION);
+echo '</pre>';
 ?>
 <!DOCTYPE html>
 <html lang="en">

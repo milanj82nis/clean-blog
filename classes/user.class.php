@@ -189,8 +189,70 @@ echo 'Please , enter valid email address.';
 
 }// userRegistration
 
+private function checkIsLoginFormEmpty($email , $password ){
+
+    if( !empty($email )&& !empty($password )){
+        return true;
+    } else {
+        return false;
+    }
+
+}// checkIsLoginFormEmpty
+public function userLogin($email , $password ){
+
+if( $this -> checkIsLoginFormEmpty($email , $password )){
+
+if( $this -> chekcIsValidEmail($email)){
+
+$sql = 'select * from users where email = ? and active = ? and banned = ? ';
+$query = $this -> connect()-> prepare($sql);
+$query -> execute([$email , 1 , 0 ]);
+$results = $query -> fetchAll();
+
+if( count($results) > 0 ){
+
+foreach ($results as $result ) {
+        
+        $hashed_password = $result['password'];
+
+if( password_verify($password , $hashed_password)){
+$_SESSION['logged'] = 1 ;
+$_SESSION['user_id']= $result['id'];
+$_SESSION['name']= $result['name'];
+$_SESSION['email']= $result['email'];
+$_SESSION['is_admin']= $result['is_admin'];
+$_SESSION['banned']= $result['banned'];
+$_SESSION['active']= $result['active'];
+$_SESSION['ip_address']= $result['ip_address'];
+$_SESSION['featured_image']= $result['featured_image'];
+header('Location:index.php');
+exit();
+} else {
+
+    echo 'Wrong email or password.Please try again.';
+}
+
+}
 
 
+
+} else {
+    echo 'There is no account associated with that email address.';
+}
+
+
+} else {
+echo 'Please , enter valid email address.';
+}// chekcIsValidEmail
+
+
+
+} else {
+echo 'Please , fill all fields in login form.';
+}// checkIsLoginFormEmpty
+
+
+}// userLogin
 
 
 
