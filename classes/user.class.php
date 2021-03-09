@@ -312,17 +312,11 @@ $message = 'Your new password is : ' . $password;
     $mail->AltBody = $message;
 
     $mail->send();
-    echo 'Message has been sent';
+    
 
 } catch (  PDOException $e) {
     echo $e -> getMessage();
 }
-
-
-
-
-
-
 
 }else {
 
@@ -334,12 +328,18 @@ $message = 'Your new password is : ' . $password;
 }
 
 
-
-
-
-
-
 }// passwordReset
+
+
+public function checkIsUserLoggedIn(){
+    if( isset($_SESSION['logged'])){
+        return true;
+    } else {
+        return false;
+    }
+
+}// checkIsUserLoggedIn
+
 
 
 

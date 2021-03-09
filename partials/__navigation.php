@@ -18,6 +18,30 @@
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
+<?php 
+$logged = new User();
+
+if( $logged -> checkIsUserLoggedIn()){
+  ?>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.php">Welcome back ,<?php echo $_SESSION['name'] ?> </a>
+          </li>
+          <li class="nav-item"><a href="">Logout</a></li>
+  <?php
+} else {
+  ?>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">Login</a>
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" href="register.php">Register</a>
+          </li>
+  <?php
+}
+
+
+ ?>
+
         </ul>
       </div>
     </div>

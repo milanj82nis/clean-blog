@@ -3,6 +3,13 @@ require_once 'include/db.inc.php';
 require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
 
+$logged = new User();
+
+if( $logged -> checkIsUserLoggedIn()){
+  header('Location:index.php');
+  exit();
+} 
+
 
 ?>
 <!DOCTYPE html>

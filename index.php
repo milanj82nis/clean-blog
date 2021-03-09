@@ -4,7 +4,6 @@ require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
 
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
