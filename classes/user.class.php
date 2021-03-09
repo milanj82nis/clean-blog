@@ -254,6 +254,97 @@ echo 'Please , fill all fields in login form.';
 
 }// userLogin
 
+public function passwordReset($email){
+
+
+if( $this -> chekcIsValidEmail($email)){
+
+
+$sql = 'select email from users where email = ? ' ;
+
+$query = $this -> connect() -> prepare($sql );
+
+$query -> execute([ $email ]);
+
+$results = $query -> fetchAll();
+
+if ( count($results )> 0 ){
+
+    $chars = 'qwertzuiopasdfghjklyxcvbnm,.-!#$%&/()=?*QWERTZUIOPASDFGHJKLYXCVBNM';
+    $password = substr( str_shuffle($chars) , 6 , 10 );
+
+    $hashed_password = password_hash($password , PASSWORD_DEFAULT );
+ 
+    $sql = 'update users set password = ? where email = ? ';
+
+    $query = $this -> connect() -> prepare($sql);
+
+    $query -> execute([ $hashed_password , $email]);
+
+    echo 'Your password is sent on your email address.';
+
+$mail = new PHPMailer(true);
+
+try {
+
+ //Server settings
+
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = '3f94cc5293689a';                     //SMTP username
+    $mail->Password   = 'fdb778d8ba98f1';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+    $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+    //Recipients
+    $mail->setFrom('milanj31@gmail.com', 'Milan Janković');
+    $mail->addAddress($email );     //Add a recipient
+
+
+$subject = 'Password reset';
+$message = 'Your new password is : ' . $password;
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = $subject;
+    $mail->Body    = $message;
+    $mail->AltBody = $message;
+
+    $mail->send();
+    echo 'Message has been sent';
+
+} catch (  PDOException $e) {
+    echo $e -> getMessage();
+}
+
+
+
+
+
+
+
+}else {
+
+    echo 'This email address is not associated with any account.';
+}
+} else {
+
+    echo 'Please , provide valid email address.';
+}
+
+
+
+
+
+
+
+}// passwordReset
+
+
+
+
+
 
 
 }// User
