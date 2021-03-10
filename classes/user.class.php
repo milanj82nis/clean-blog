@@ -11,7 +11,17 @@ class User extends DbConnect {
 
 
 
+public function userLogout(){
+if( isset($_SESSION['logged'])){
+session_destroy();
+header('Location:index.php');
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('You successfully logged out for our webiste.');
+ 
 
+}// main isset
+
+}// userLogout
 
 
 private function checkIsEmailFormEmpty( $name , $email , $message , $subject ){

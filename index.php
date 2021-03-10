@@ -19,8 +19,13 @@ require_once 'include/config.inc.php';
 
 <?php require_once 'partials/__navigation.php' ?>
 <?php require_once 'partials/__page_header.php' ?>
+
+
+
+
   <!-- Main Content -->
   <div class="container">
+
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">

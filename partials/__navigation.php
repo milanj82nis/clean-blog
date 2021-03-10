@@ -33,7 +33,30 @@ if( $logged -> checkIsUserLoggedIn()){
     <a class="dropdown-item" href="my-account.php">My account</a>
     <a class="dropdown-item" href="favourite-blog-posts.php">Favourite blog posts</a>
     <a class="dropdown-item" href="messages.php">Messages</a>
-    <a class="dropdown-item" href="">Logout</a>
+    
+
+
+
+
+    <a >
+<?php
+
+if( isset($_POST['userLogout'])){
+
+$userLogout = new User;
+$userLogout -> userLogout();
+
+
+ } 
+ ?>
+
+<form action="" method="post">
+  <button name="userLogout" class="dropdown-item">Logout</button>
+
+</form>
+
+
+    </a>
   </div>
 
 
