@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2021 at 12:43 AM
+-- Generation Time: Mar 10, 2021 at 12:24 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -89,8 +89,7 @@ CREATE TABLE `users` (
   `ip_address` varchar(211) NOT NULL,
   `featured_image` varchar(211) DEFAULT 'https://usapng.com/images/thumb/200_/user-icon-6.webp',
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `slug` varchar(211) NOT NULL
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -124,8 +123,7 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `UNIQUE` (`slug`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables

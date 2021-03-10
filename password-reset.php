@@ -2,6 +2,9 @@
 require_once 'include/db.inc.php';
 require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
+require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
 
 $logged = new User();
 
@@ -79,6 +82,7 @@ $user -> passwordReset( $email  );
 
 
 ?>
+<?php $msg->display(); ?>
 
                             <form name="my-form"  action="password-reset.php" method="POST">
                                 

@@ -4,8 +4,10 @@ require 'include/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'include/vendor/phpmailer/phpmailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-class User extends DbConnect {
+require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
 
+
+class User extends DbConnect {
 
 
 
@@ -68,7 +70,10 @@ try {
     $mail->AltBody = $message;
 
     $mail->send();
-    echo 'Message has been sent';
+
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Message has been sent');
+ 
 
 } catch (  PDOException $e) {
 	echo $e -> getMessage();
@@ -79,12 +84,15 @@ try {
 
 
 } else {
-	echo 'Please , enter valid email address.';
+        $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , enter valid email address.');
+ 
 }// chekcIsValidEmail
 
 } else {
-
-	echo 'Please , fill all fields in form.';
+  $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form..');
+	
 }// checkIsEmailFormEmpty
 
 
@@ -157,34 +165,41 @@ $sql = 'insert into users ( name , email , password , ip_address , created_at , 
  values (? , ? , ? , ? , ? , ? ) ';
 $query = $this -> connect()-> prepare($sql );
 $query -> execute([ $name , $email , $hashed_password , $ip_address , $created_at , $updated_at ]);
+  $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('You are registered on our website.');
+    
 
-echo 'You are registered on our website.';
-exit();
 
 } else {
-
-    echo 'Your password are not same.';
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Your passwords are not same..');
+   
 
 }// checkIsPasswordsSame
 
 }else {
-
-    echo 'Email address is already registered.';
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Email address is already registered.');
+    
 }
 
 
 
 
 } else {
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , enter valid email address.');
+    
 
-echo 'Please , enter valid email address.';
 }// chekcIsValidEmail
 
 
 
 } else {
-
-    echo 'Please , fill all fields in register form.';
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in register form.');
+    
+  
 }// checkIsRegisterFormEmpty
 
 }// userRegistration
@@ -228,8 +243,10 @@ $_SESSION['featured_image']= $result['featured_image'];
 header('Location:index.php');
 exit();
 } else {
-
-    echo 'Wrong email or password.Please try again.';
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Wrong email or password.Please try again.');
+   
+   
 }
 
 }
@@ -237,18 +254,27 @@ exit();
 
 
 } else {
-    echo 'There is no account associated with that email address.';
+     $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('There is no account associated with that email address');
+   
 }
 
 
 } else {
-echo 'Please , enter valid email address.';
+     $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , enter valid email address.');
+   
+
 }// chekcIsValidEmail
 
 
 
 } else {
-echo 'Please , fill all fields in login form.';
+         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
+       $msg->error('Please , fill all fields in login form.');
+   
+
 }// checkIsLoginFormEmpty
 
 
@@ -281,8 +307,10 @@ if ( count($results )> 0 ){
 
     $query -> execute([ $hashed_password , $email]);
 
-    echo 'Your password is sent on your email address.';
+         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
+       $msg->success('Your password is sent on your email address');
+   
 $mail = new PHPMailer(true);
 
 try {
@@ -319,12 +347,18 @@ $message = 'Your new password is : ' . $password;
 }
 
 }else {
+         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
-    echo 'This email address is not associated with any account.';
+       $msg->error('This email address is not associated with any account');
+   
+    
 }
 } else {
+         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
-    echo 'Please , provide valid email address.';
+       $msg->error('Please , provide valid email address.');
+   
+   
 }
 
 
