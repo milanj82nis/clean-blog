@@ -23,10 +23,24 @@ $logged = new User();
 
 if( $logged -> checkIsUserLoggedIn()){
   ?>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.php">Welcome back ,<?php echo $_SESSION['name'] ?> </a>
-          </li>
-          <li class="nav-item"><a href="">Logout</a></li>
+
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Welcome back ,<?php echo $_SESSION['name'] ?> 
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="my-account.php">My account</a>
+    <a class="dropdown-item" href="favourite-blog-posts.php">Favourite blog posts</a>
+    <a class="dropdown-item" href="messages.php">Messages</a>
+    <a class="dropdown-item" href="">Logout</a>
+  </div>
+
+
+</li>
+
+         
+         
   <?php
 } else {
   ?>
@@ -41,6 +55,13 @@ if( $logged -> checkIsUserLoggedIn()){
 
 
  ?>
+
+
+
+
+
+
+
 
         </ul>
       </div>
