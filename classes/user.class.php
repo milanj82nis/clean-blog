@@ -10,7 +10,6 @@ require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.p
 class User extends DbConnect {
 
 
-
 public function userLogout(){
 if( isset($_SESSION['logged'])){
 session_destroy();
