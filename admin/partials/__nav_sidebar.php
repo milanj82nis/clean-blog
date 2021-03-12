@@ -20,7 +20,18 @@
                         
                     </ul>
                 </li>
-
+                <li>
+                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Tags</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                        <li>
+                            <a href="add-tag.php"><i class="fas fa-angle-right"></i> Add tag</a>
+                        </li>
+                        <li>
+                            <a href="tags.php"><i class="fas fa-angle-right"></i> All tags</a>
+                        </li>
+                        
+                    </ul>
+                </li>
 
             </ul>
         </nav>

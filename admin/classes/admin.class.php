@@ -12,6 +12,7 @@ public function checkIsUserAdmin(){
 
 }// checkIsUserAdmin
 
+
 public function getAllBlogCategories(){
 	$sql = 'select * from categories order by created_at desc';
 	$query = $this -> connect() -> query($sql);
@@ -49,6 +50,8 @@ private function create_slug($string){
 	return $slug;
 
 }// create_slug
+
+
 public function addCategory($name ){
 
 if( $this -> checkIsAllCategoryFieldsNotEmpty($name)){
@@ -83,7 +86,64 @@ echo 'This category is in database.';
 
 }// addCategory
 
+private function checkIsTagExist($name){
+$sql = 'select name from tags where name = ? ';
+$query = $this -> connect() -> prepare($sql);
+$query -> execute([ $name ]);
+$results = $query -> fetchAll();
+if( count($results)== 0 ){
+	return true;
+}else {
+	return false;
+}
 
+}// checkIsTagExist
+
+
+public function addTag($name ){
+
+if( $this -> checkIsAllCategoryFieldsNotEmpty($name)){
+
+
+if( $this -> checkIsTagExist($name)){
+
+$slug =  $this -> create_slug($name);
+
+
+$created_at = date('Y-m-d H:i:s');
+$updated_at = date( 'Y-m-d H:i:s');
+	$sql = 'insert into tags ( name , slug , created_at , updated_at ) 
+	values( ? , ? , ? , ? )';
+
+	$query = $this -> connect() -> prepare($sql);
+	$query -> execute([ $name , $slug , $created_at , $updated_at]);
+
+	echo 'Tag is added.';
+
+} else {
+
+echo 'This tag is in database.';
+
+} // checkIsCategoryExits
+
+
+
+} else {
+	echo 'Please , fill all fields in form.';
+}// checkIsAllCategoryFieldsNotEmpty
+
+}// addCategory
+
+
+
+
+public function getAllBlogTags(){
+	$sql = 'select * from tags order by created_at desc';
+	$query = $this -> connect() -> query($sql);
+
+	$tags = $query -> fetchAll();
+	return $tags;
+}// getAllBlogCategories
 
 
 
