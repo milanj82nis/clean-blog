@@ -32,6 +32,17 @@
                         
                     </ul>
                 </li>
-
+                <li>
+                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Users</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                        <li>
+                            <a href="add-user.php"><i class="fas fa-angle-right"></i> Add user</a>
+                        </li>
+                        <li>
+                            <a href="users.php"><i class="fas fa-angle-right"></i> All users</a>
+                        </li>
+                        
+                    </ul>
+                </li>
             </ul>
         </nav>
