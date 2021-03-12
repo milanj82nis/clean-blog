@@ -9,3 +9,7 @@ In same folder there is sql file so upload him in phpmyadmin and make all tables
 In user.class.php in function sendMessage you need to change server details for phpmailer  .
 
 SQL file with all tables can be founded in include folder.
+
+You can watch tutorial about making this blog on my youtube channel : 
+
+https://www.youtube.com/watch?v=oLt-nuM5mJo&list=PL4qMjwabcRympl7TUF81eI-MJk7icmwa1
