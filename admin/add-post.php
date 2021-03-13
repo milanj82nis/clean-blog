@@ -2,6 +2,9 @@
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
+require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
 $admin = new Admin;
 if( !$admin -> checkIsUserAdmin()){
    
@@ -30,6 +33,11 @@ if( !$admin -> checkIsUserAdmin()){
     <link href="assets/css/master.css" rel="stylesheet">
     <link href="assets/vendor/chartsjs/Chart.min.css" rel="stylesheet">
     <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+    <style>
+.ck-editor__editable_inline {
+    min-height: 300px;
+}
+</style>
 </head>
 
 <body>
@@ -79,7 +87,7 @@ if( isset($_POST['addPost'])){
 
 ?>
 
-
+<?php $msg->display(); ?>
                                     <form accept-charset="utf-8" method="post" action="add-post.php">
                                         <div class="form-group row">
                                             <label class="col-sm-2" for="title">Post title</label>
@@ -144,14 +152,14 @@ foreach( $tags -> getAllBlogTags() as $tag){
                                         <div class="form-group row">
                                             <label class="col-sm-2" for="excerpt">Excerpt</label>
                                             <div class="col-sm-10">
-                                                <textarea  class="form-control" cols="40" rows="10" name="excerpt"></textarea>
+                                                <textarea  id="editor1" class="form-control" cols="40" rows="10" name="excerpt"></textarea>
                                                 <small class="form-text">Enter excerpt for post.</small>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2" for="content">Post content </label>
                                             <div class="col-sm-10">
-                                                <textarea class="form-control" cols="40" rows="10" name="content"></textarea>
+                                                <textarea id="editor2"  class="form-control" cols="40" rows="10" name="content"></textarea>
                                                 <small class="form-text">Enter post content</small>
                                             </div>
                                         </div>
@@ -199,6 +207,34 @@ foreach( $tags -> getAllBlogTags() as $tag){
     <script src="assets/vendor/chartsjs/Chart.min.js"></script>
     <script src="assets/js/dashboard-charts.js"></script>
     <script src="assets/js/script.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+
+
+<script>
+  ClassicEditor
+    .create( document.querySelector( '#editor1' ), {
+      // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+    } )
+    .then( editor => {
+      window.editor = editor;
+    } )
+    .catch( err => {
+      console.error( err.stack );
+    } );
+</script>
+<script>
+  ClassicEditor
+    .create( document.querySelector( '#editor2' ), {
+      // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+    } )
+    .then( editor => {
+      window.editor = editor;
+    } )
+    .catch( err => {
+      console.error( err.stack );
+    } );
+</script>
 </body>
 
 </html>

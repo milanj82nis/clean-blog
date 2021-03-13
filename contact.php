@@ -3,7 +3,7 @@ require_once 'include/db.inc.php';
 require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
 require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
-    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
 
 ?>
@@ -14,7 +14,11 @@ require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.p
     <title>Contact us | <?php echo SITE_NAME; ?></title>
 
 <?php require_once 'partials/__head.php' ;?>
-
+<style>
+.ck-editor__editable_inline {
+    min-height: 300px;
+}
+</style>
 </head>
 
 <body>
@@ -61,7 +65,7 @@ try {
         <input class="form-control" type="text" name="name" placeholder="Name..." /><br />
         <input class="form-control" type="text" name="subject" placeholder="Subject..." /><br />
         <input class="form-control" type="email" name="email" placeholder="E-mail..." /><br />
-        <textarea class="form-control" name="message" placeholder="How can we help you?" style="height:150px;"></textarea><br />
+        <textarea class="form-control"   id="editor" rows="20" name="message" placeholder="How can we help you?" style="height:150px;"></textarea><br />
         <input class="btn btn-primary" type="submit" name="sendMessage" value="Send" /><br /><br />
       </form>
   </div>
@@ -102,6 +106,22 @@ try {
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+
+
+<script>
+  ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+      // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+    } )
+    .then( editor => {
+      window.editor = editor;
+    } )
+    .catch( err => {
+      console.error( err.stack );
+    } );
+</script>
 
 </body>
 

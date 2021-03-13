@@ -9,8 +9,8 @@
                
 
                 <li>
-                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Categories</a>
-                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                    <a href="#uielementsmenucategories" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Categories</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenucategories">
                         <li>
                             <a href="add-category.php"><i class="fas fa-angle-right"></i> Add category</a>
                         </li>
@@ -21,8 +21,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Tags</a>
-                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                    <a href="#uielementsmenutags" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Tags</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenutags">
                         <li>
                             <a href="add-tag.php"><i class="fas fa-angle-right"></i> Add tag</a>
                         </li>
@@ -33,8 +33,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Users</a>
-                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                    <a href="#uielementsmenuusers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Users</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenuusers">
                         <li>
                             <a href="add-user.php"><i class="fas fa-angle-right"></i> Add user</a>
                         </li>
@@ -45,8 +45,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Posts</a>
-                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                    <a href="#uielementsmenuposts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Posts</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenuposts">
                         <li>
                             <a href="add-post.php"><i class="fas fa-angle-right"></i> Add post</a>
                         </li>

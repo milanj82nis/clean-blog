@@ -1,4 +1,5 @@
 <?php 
+require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
 
 class Admin extends DbConnect{
 
@@ -70,18 +71,22 @@ $updated_at = date( 'Y-m-d H:i:s');
 	$query = $this -> connect() -> prepare($sql);
 	$query -> execute([ $name , $slug , $created_at , $updated_at]);
 
-	echo 'Category is added.';
 
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Category is added.');
+ 
 } else {
 
-echo 'This category is in database.';
 
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This category is in database.');
 } // checkIsCategoryExits
 
 
 
 } else {
-	echo 'Please , fill all fields in form.';
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
 }// checkIsAllCategoryFieldsNotEmpty
 
 }// addCategory
@@ -118,18 +123,24 @@ $updated_at = date( 'Y-m-d H:i:s');
 	$query = $this -> connect() -> prepare($sql);
 	$query -> execute([ $name , $slug , $created_at , $updated_at]);
 
-	echo 'Tag is added.';
-
+	
+	
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Tag is added.');
 } else {
+	 
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This tag is in database.');
 
-echo 'This tag is in database.';
 
 } // checkIsCategoryExits
 
 
 
-} else {
-	echo 'Please , fill all fields in form.';
+} else {	 
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+	
 }// checkIsAllCategoryFieldsNotEmpty
 
 }// addCategory
@@ -206,23 +217,29 @@ $sql = 'insert into users ( name , email , slug , password , active , is_admin ,
 $query = $this -> connect()-> prepare($sql);
 $query -> execute([$name , $email , $slug , $hashed_pasword , $active , $is_admin , $created_at , $updated_at ]);
 
-echo 'User is added.';
 
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('User is added.');
+	
 } else {
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('User is added.');
 	echo 'This email already registered.';
 }
 
 }else {
-	echo 'Your passwords need to be same.';
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Your passwords need to be same.');
 }// checkIfPasswordsSame
 
 }else  {
-	echo 'Please , enter valid email address.';
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , enter valid email address');
 } // checkIsEmailValid
 
 } else {
-
-	echo 'Please , fill all fields in form.';
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
 }// checkIsUsersFormEmpty
 
 }// addUser
@@ -284,15 +301,19 @@ $sql = 'insert into posts ( title , slug , user_id , category_id , tag_id , exce
 $query = $this -> connect() -> prepare($sql);
 $query -> execute([ $title , $slug , $user_id , $category_id , $tag_id , $excerpt , $content , $featured , $featured_image , $created_at , $updated_at , 0 , 0 ]);
 
-echo 'Posts is aded in database.';
 
 
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Posts is aded in database.');
 } else{
-	echo 'Please, change your title.';
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please, change your title.');
 }// checkIsTitleExitsInPosts
 
 } else{
-echo 'Please , fill all fields in form.';
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+
 }// checkIsPostFormEmpty
 
 

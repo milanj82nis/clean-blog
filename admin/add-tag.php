@@ -2,6 +2,9 @@
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
+require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
 $admin = new Admin;
 if( !$admin -> checkIsUserAdmin()){
    
@@ -73,7 +76,7 @@ $admin -> addTag( $name );
 
 ?>
 
-
+<?php $msg->display(); ?>
                                     <form accept-charset="utf-8" method="post" action="add-tag.php">
                                         <div class="form-group row">
                                             <label class="col-sm-2" for="email">Tag name</label>
