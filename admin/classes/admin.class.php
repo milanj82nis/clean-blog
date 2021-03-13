@@ -237,7 +237,68 @@ return $users;
 }// 
 
 
+public function getAllPosts(){
 
+$sql = 'select * from posts order by created_at desc';
+$query = $this -> connect() -> query($sql);
+
+$posts = $query -> fetchAll();
+return $posts;
+}// 
+
+private function checkIsPostFormEmpty($title , $category_id , $tag_id , $featured_image ,
+     $excerpt , $content , $featured ){
+if( !empty($title) &&  !empty($category_id) && !empty($tag_id) && !empty($featured_image) && !empty($excerpt) && !empty($content) && !empty($featured) ){
+
+return true;
+} else {
+	return false;
+}
+
+}// checkIsPostFormEmpty
+
+private function checkIsTitleExitsInPosts($title){
+$sql = 'select title from posts where title = ? ';
+$query = $this -> connect() -> prepare($sql);
+$query -> execute([$title]);
+$titles = $query -> fetchAll();
+if( count($titles ) == 0 ){
+	return true;
+} else {
+	return false;
+}
+}// checkIsTitleExitsInPosts
+public function addPost($title , $category_id , $tag_id , $featured_image ,
+     $excerpt , $content , $featured ){
+if($this -> checkIsPostFormEmpty($title , $category_id , $tag_id , $featured_image ,
+     $excerpt , $content , $featured )){
+
+if($this -> checkIsTitleExitsInPosts($title)){
+$created_at = date('Y-m-d H:i:s');
+$updated_at = date( 'Y-m-d H:i:s');
+$slug =   $this -> create_slug($title);
+$user_id = (int)$_SESSION['user_id'];
+
+$sql = 'insert into posts ( title , slug , user_id , category_id , tag_id , excerpt , content , featured , featured_image , created_at , updated_at , views , soft_deleted ) values 
+( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )';
+$query = $this -> connect() -> prepare($sql);
+$query -> execute([ $title , $slug , $user_id , $category_id , $tag_id , $excerpt , $content , $featured , $featured_image , $created_at , $updated_at , 0 , 0 ]);
+
+echo 'Posts is aded in database.';
+
+
+} else{
+	echo 'Please, change your title.';
+}// checkIsTitleExitsInPosts
+
+} else{
+echo 'Please , fill all fields in form.';
+}// checkIsPostFormEmpty
+
+
+
+
+}// addPost
 
 
 

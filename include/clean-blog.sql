@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2021 at 10:40 PM
+-- Generation Time: Mar 10, 2021 at 12:24 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -34,13 +34,6 @@ CREATE TABLE `categories` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
-(9, 'Category 1', 'Category-1', '2021-03-11 22:50:39', '2021-03-11 22:50:39');
 
 -- --------------------------------------------------------
 
@@ -79,15 +72,6 @@ CREATE TABLE `tags` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tags`
---
-
-INSERT INTO `tags` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'Tag 1', 'Tag-1', '2021-03-12 11:26:59', '2021-03-12 11:26:59'),
-(2, 'Tag 23', 'Tag-23', '2021-03-12 11:27:30', '2021-03-12 11:27:30'),
-(3, 'My  tag', 'My-tag', '2021-03-12 11:30:45', '2021-03-12 11:30:45');
-
 -- --------------------------------------------------------
 
 --
@@ -97,7 +81,6 @@ INSERT INTO `tags` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(211) NOT NULL,
-  `slug` varchar(211) NOT NULL,
   `email` varchar(211) NOT NULL,
   `password` varchar(211) NOT NULL,
   `is_admin` int(11) UNSIGNED NOT NULL DEFAULT 0,
@@ -110,15 +93,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `slug`, `email`, `password`, `is_admin`, `banned`, `active`, `ip_address`, `featured_image`, `created_at`, `updated_at`) VALUES
-(1, 'Milan Janković', '', 'milanj31@gmail.com', '$2y$10$NJ8eUVwNqRrhEbDNUA4MuePBGJUpdZG0pcwDn8waakDHcsNnNPj1.', 1, 0, 1, '::1', 'https://usapng.com/images/thumb/200_/user-icon-6.webp', '2021-03-10 14:32:31', '2021-03-10 14:32:31'),
-(2, 'Milan Janković', 'Milan-Jankovi-', 'milanj31@gmial.comm', '$2y$10$4VtG64haw5CXkgZt66DveOiNwQWfQn.CaYzuPB5xqSzCjL2UUylLa', 1, 0, 1, '', 'https://usapng.com/images/thumb/200_/user-icon-6.webp', '2021-03-12 22:19:39', '2021-03-12 22:19:39'),
-(3, 'This is test user', 'This-is-test-user', 'test@gmail.com', '$2y$10$Vd3wAb92O0cj4Of5fFo9Lewr/LaRlA7yI.6BaZWcgNe556aWusb.m', 0, 0, 0, '', 'https://usapng.com/images/thumb/200_/user-icon-6.webp', '2021-03-12 22:23:45', '2021-03-12 22:23:45');
-
---
 -- Indexes for dumped tables
 --
 
@@ -126,13 +100,15 @@ INSERT INTO `users` (`id`, `name`, `slug`, `email`, `password`, `is_admin`, `ban
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQUE` (`slug`);
 
 --
 -- Indexes for table `tags`
@@ -157,7 +133,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -169,13 +145,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

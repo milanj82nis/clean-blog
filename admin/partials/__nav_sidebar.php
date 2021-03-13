@@ -44,5 +44,17 @@
                         
                     </ul>
                 </li>
+                <li>
+                    <a href="#uielementsmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Posts</a>
+                    <ul class="collapse list-unstyled" id="uielementsmenu">
+                        <li>
+                            <a href="add-post.php"><i class="fas fa-angle-right"></i> Add post</a>
+                        </li>
+                        <li>
+                            <a href="posts.php"><i class="fas fa-angle-right"></i> All posts</a>
+                        </li>
+                        
+                    </ul>
+                </li>
             </ul>
         </nav>
