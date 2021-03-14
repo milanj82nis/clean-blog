@@ -35,8 +35,7 @@ if( $logged -> checkIsUserLoggedIn()){
     <a class="dropdown-item" href="messages.php">Messages</a>
     
 <?php 
-require_once 'admin/classes/admin.class.php';
-$admin = new Admin;
+$admin = new User;
 if( $admin -> checkIsUserAdmin()){
 ?>
     <a class="dropdown-item" href="admin/dashboard.php">Admin dashboard</a>

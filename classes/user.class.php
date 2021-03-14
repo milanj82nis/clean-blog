@@ -11,14 +11,14 @@ class User extends DbConnect {
 
 
 public function userLogout(){
-if( isset($_SESSION['logged'])){
-session_destroy();
-header('Location:index.php');
-    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
-    $msg->success('You successfully logged out for our webiste.');
- 
+    if( isset($_SESSION['logged'])){
+    session_destroy();
+    header('Location:index.php');
+        $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->success('You successfully logged out for our webiste.');
+     
 
-}// main isset
+    }// main isset
 
 }// userLogout
 
@@ -249,41 +249,33 @@ $_SESSION['banned']= $result['banned'];
 $_SESSION['active']= $result['active'];
 $_SESSION['ip_address']= $result['ip_address'];
 $_SESSION['featured_image']= $result['featured_image'];
-header('Location:index.php');
-exit();
+header('Refresh:5;URL=index.php');
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('You are logged');
+   
+
+
 } else {
  $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     $msg->error('Wrong email or password.Please try again.');
-   
-   
+    
 }
 
 }
-
-
 
 } else {
      $msg = new \Plasticbrain\FlashMessages\FlashMessages();
-    $msg->error('There is no account associated with that email address');
-   
+    $msg->error('There is no account associated with that email address');   
 }
-
-
 } else {
      $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     $msg->error('Please , enter valid email address.');
-   
 
 }// chekcIsValidEmail
-
-
-
 } else {
          $msg = new \Plasticbrain\FlashMessages\FlashMessages();
-
        $msg->error('Please , fill all fields in login form.');
    
-
 }// checkIsLoginFormEmpty
 
 
@@ -383,6 +375,16 @@ public function checkIsUserLoggedIn(){
 
 }// checkIsUserLoggedIn
 
+
+public function checkIsUserAdmin(){
+
+    if($_SESSION['is_admin'] == 1 ){
+        return true;
+    } else {
+        return false;
+    }
+
+}// checkIsUserAdmin
 
 
 

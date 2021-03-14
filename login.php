@@ -78,7 +78,7 @@ $user -> userLogin( $email , $password );
   echo $e -> getMessage();
 }
 
-
+echo $msg -> display();
 ?>
 
                             <form name="my-form"  action="login.php" method="POST">
