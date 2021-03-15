@@ -36,10 +36,12 @@ $user = new User;
 $posts = $blog -> getAllBlogPosts()['posts'];
 
 foreach($posts as $post ){
+
+
 ?>
 
         <div class="post-preview">
-          <a href="post.html">
+          <a href="post.php?slug=<?php echo $post['slug'];?>">
             <h2 class="post-title">
               <?php echo $post['title'] ?>
             </h2>
@@ -48,7 +50,7 @@ foreach($posts as $post ){
             </h3>
           </a>
           <p class="post-meta">Posted by
-            <a href="#"><?php echo $user -> getUserDetails($post['user_id'])['name'] ?></a>
+            <a href=""><?php echo $user -> getUserDetails($post['user_id'])['name'] ?></a>
             on <?php echo $post['created_at'] ?></p>
         </div>
 <?php

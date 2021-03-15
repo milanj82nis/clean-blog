@@ -36,6 +36,30 @@ return array('pages' => $pages, 'posts' => $posts ,'per-page' => $perPage);
 }// getAllBlogPosts
 
 
+public function getPostContent($slug){
+
+
+	$sql = 'select * from posts where slug = ? ';
+	$query = $this -> connect() -> prepare($sql);
+	$query -> execute([ $slug ]);
+
+	$post = $query -> fetch();
+if( !$post){
+
+	header('Location:index.php');
+	exit();
+}else {
+	return $post;
+}
+
+	return $post;
+
+}// getPostContent
+
+
+
+
+
 
 
 }// Blog
