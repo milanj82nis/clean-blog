@@ -50,7 +50,11 @@ foreach($posts as $post ){
             </h3>
           </a>
           <p class="post-meta">Posted by
-            <a href=""><?php echo $user -> getUserDetails($post['user_id'])['name'] ?></a>
+            <a href="user.php?slug=<?php  echo $user -> getUserDetails($post['user_id'])['slug']  ?>">
+              
+              <?php echo $user -> getUserDetails($post['user_id'])['name'] ?>
+                
+              </a>
             on <?php echo $post['created_at'] ?></p>
         </div>
 <?php
@@ -73,7 +77,7 @@ $perPage = $blog -> getAllBlogPosts()['per-page'];
 
 
 
- <li class="page-item"><a class="page-link" href="?page=<?php echo $x;?>&&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
+ <li class="page-item"><a class="page-link" href="?page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
 
 
 

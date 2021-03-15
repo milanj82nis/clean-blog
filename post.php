@@ -12,6 +12,8 @@ $blog = new Blog;
 $slug = $_GET['slug'];
 $user = new User;
 $user_id = $blog -> getPostContent($slug)['user_id'];
+$category_id = $blog -> getPostContent($slug)['category_id'];
+$tag_id = $blog -> getPostContent($slug)['tag_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +64,21 @@ echo $user -> getUserDetails($user_id)['name'];
 
 <?php echo $blog -> getPostContent($slug)['content'] ?>
 
+
+
+ <p>Category : 
+            <a href="category.php?slug=<?php echo $blog -> getCategoryDetails($category_id)['slug'];?>">
+
+<?php echo $blog -> getCategoryDetails($category_id)['name']; ?>
+
+            </a>
+
+</p>
+<p>
+             Tag : 
+            <a href="tag.php?slug=<?php echo $blog -> getTagDetails($tag_id)['slug'];?>">
+              <?php echo $blog -> getTagDetails($tag_id)['name']; ?>
+</a></p>
 
 
         </div>

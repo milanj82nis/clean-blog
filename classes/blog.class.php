@@ -56,9 +56,24 @@ if( !$post){
 
 }// getPostContent
 
+public function getCategoryDetails($id){
+	$sql = 'select * from categories where id = ? ';
+	$query = $this -> connect() ->prepare  ( $sql );
+	$query -> execute([ $id]);
+	$category = $query -> fetch();
+	return $category;
+
+}// getCategoryDetails
 
 
+public function getTagDetails($id){
+	$sql = 'select * from tags where id = ? ';
+	$query = $this -> connect() ->prepare  ( $sql );
+	$query -> execute([ $id]);
+	$tag = $query -> fetch();
+	return $tag;
 
+}// getTagDetails
 
 
 
