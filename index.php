@@ -29,59 +29,53 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview">
-          <a href="post.html">
+
+<?php  
+try {
+$posts = new Blog;
+$user = new User;
+if( count($posts -> getAllBlogPosts()) == 0 ){
+
+
+} else {
+ foreach ($posts -> getAllBlogPosts() as $post ){
+?>
+ <div class="post-preview">
+          <a href="post.php?post=<?php echo $post['slug'] ?>">
             <h2 class="post-title">
-              Man must explore, and this is exploration at its greatest
+              <?php echo $post['title']; ?>
             </h2>
             <h3 class="post-subtitle">
-              Problems look mighty small from 150 miles up
+              <?php echo substr($post['excerpt'] , 0 , 150 ); ?> ...
             </h3>
           </a>
           <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on September 24, 2019</p>
+            <a href="user.php?id=<?php echo  $post['user_id']  ?>">
+
+<?php echo $user -> getUserDetails($post['user_id'])['name']; ?>
+
+            </a>
+            on <?php echo $post['created_at'] ?></p>
         </div>
         <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
-            </h2>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on September 18, 2019</p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              Science has not yet mastered prophecy
-            </h2>
-            <h3 class="post-subtitle">
-              We predict too much for the next year and yet far too little for the next ten.
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on August 24, 2019</p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              Failure is not an option
-            </h2>
-            <h3 class="post-subtitle">
-              Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on July 8, 2019</p>
-        </div>
-        <hr>
+
+<?php
+ }// end foreach
+
+
+}// end if
+
+
+} catch( PDOException $e ){
+  echo $e -> getMessage();
+}
+
+
+
+?>   
+       
+    
+
         <!-- Pager -->
         <div class="clearfix">
           <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>

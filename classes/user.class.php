@@ -387,8 +387,20 @@ public function checkIsUserAdmin(){
 }// checkIsUserAdmin
 
 
+public function getUserDetails($id){
+
+    $sql = 'select * from users where id = ? limit 1 ';
+
+    $query = $this -> connect() -> prepare($sql );
+
+    $query -> execute([ $id]);
+
+    $user = $query-> fetch();
+
+    return $user;
 
 
+}// getUserDetails
 
 
 
