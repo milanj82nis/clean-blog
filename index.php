@@ -30,56 +30,67 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-<?php  
-try {
-$posts = new Blog;
+<?php 
+$blog = new Blog;
 $user = new User;
-if( count($posts -> getAllBlogPosts()) == 0 ){
+$posts = $blog -> getAllBlogPosts()['posts'];
 
-
-} else {
- foreach ($posts -> getAllBlogPosts() as $post ){
+foreach($posts as $post ){
 ?>
- <div class="post-preview">
-          <a href="post.php?post=<?php echo $post['slug'] ?>">
+
+        <div class="post-preview">
+          <a href="post.html">
             <h2 class="post-title">
-              <?php echo $post['title']; ?>
+              <?php echo $post['title'] ?>
             </h2>
             <h3 class="post-subtitle">
-              <?php echo substr($post['excerpt'] , 0 , 150 ); ?> ...
+              <?php echo substr($post['excerpt'] , 0 , 200 ) ?>
             </h3>
           </a>
           <p class="post-meta">Posted by
-            <a href="user.php?id=<?php echo  $post['user_id']  ?>">
-
-<?php echo $user -> getUserDetails($post['user_id'])['name']; ?>
-
-            </a>
+            <a href="#"><?php echo $user -> getUserDetails($post['user_id'])['name'] ?></a>
             on <?php echo $post['created_at'] ?></p>
         </div>
-        <hr>
+<?php
+}// foreach
+
+if( count($posts ) > 0 ){
+$pages = $blog -> getAllBlogPosts()['pages'];
+
+?>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    
+   
 
 <?php
- }// end foreach
+for ( $x = 1 ;$x <= $pages ; $x++ ){
+$perPage = $blog -> getAllBlogPosts()['per-page'];
 
-
-}// end if
-
-
-} catch( PDOException $e ){
-  echo $e -> getMessage();
-}
+?>
 
 
 
-?>   
+ <li class="page-item"><a class="page-link" href="?page=<?php echo $x;?>&&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
+
+
+
+
+<?php
+
+}// for
+?>
+  </ul>
+</nav>
+
+<?php
+
+}// main if
+ ?>
        
     
 
-        <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div>
+       
       </div>
     </div>
   </div>
