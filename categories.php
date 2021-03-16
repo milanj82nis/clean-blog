@@ -307,7 +307,7 @@ if( count($categories )> 0 ){
   foreach ( $categories as $category ){
 ?>
         <li>
-                    <a class="btn-mod btn-11" href="category.php?slug=<?php echo $category['slug']?>">
+                    <a class="btn-mod btn-11" href="category.php?id=<?php echo $category['id']?>">
                       <img src="https://img.icons8.com/carbon-copy/100/000000/trust.png"/></a>
                     <a href="category.php?slug=<?php echo $category['slug']?>"><?php echo $category['name'];?></a>
                 </li>
