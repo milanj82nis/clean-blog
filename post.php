@@ -46,7 +46,12 @@ echo $user -> getUserDetails($user_id)['name'];
 ?>
 
               </a>
-              on <?php echo $blog -> getPostContent($slug)['created_at'];?> </span>
+              on <?php 
+$timeago = new get_timeago;
+              echo $timeago -> timeago( $blog -> getPostContent($slug)['created_at']);
+
+
+              ?> </span>
           </div>
         </div>
       </div>

@@ -55,7 +55,12 @@ foreach($posts as $post ){
               <?php echo $user -> getUserDetails($post['user_id'])['name'] ?>
                 
               </a>
-            on <?php echo $post['created_at'] ?></p>
+            on <?php 
+$timeago = new get_timeago;
+            echo $timeago -> timeago($post['created_at']); 
+
+
+            ?></p>
         </div>
 <?php
 }// foreach

@@ -3,6 +3,7 @@
 class Blog extends DbConnect{
 
 
+
 public function getAllBlogPosts(){
 
 
