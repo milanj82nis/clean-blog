@@ -9,3 +9,5 @@ In same folder there is sql file so upload him in phpmyadmin and make all tables
 In user.class.php in function sendMessage you need to change server details for phpmailer  .
 
 SQL file with all tables can be founded in include folder.
+
+In posts.php you need to change ENTER_YOUR_DISQUS_ID and write your disqus application id on two places.
