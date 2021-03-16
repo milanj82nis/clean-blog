@@ -2,6 +2,7 @@
 
 class Blog extends DbConnect{
 
+
 public function getAllBlogPosts(){
 
 
@@ -74,6 +75,18 @@ public function getTagDetails($id){
 	return $tag;
 
 }// getTagDetails
+
+public function getAllCategories(){
+
+	$sql = 'select * from categories order by name asc ';
+	$query = $this -> connect() -> query($sql);
+	$categories = $query -> fetchAll();
+	return $categories;
+
+}// getAllCategories
+
+
+
 
 
 
