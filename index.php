@@ -41,7 +41,7 @@ foreach($posts as $post ){
 ?>
 
         <div class="post-preview">
-          <a href="post.php?slug=<?php echo $post['slug'];?>">
+          <a href="post.php?slug=<?php echo $post['slug'];?>#disqus_thread">
             <h2 class="post-title">
               <?php echo $post['title'] ?>
             </h2>
