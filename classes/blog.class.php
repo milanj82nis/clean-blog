@@ -2,6 +2,58 @@
 
 class Blog extends DbConnect{
 
+
+public function removeFromFavouritePosts($post_id){
+
+
+$user_id = (int)$_SESSION['user_id'];
+$sql = 'delete  from favourite_posts where post_id = ? and user_id = ? ';
+$query =  $this -> connect() -> prepare($sql );
+$query -> execute([ $post_id , $user_id ]);
+header('Location:' . $_SERVER['HTTP_REFERER']);
+exit();
+
+
+}// removeFromFavouritePosts
+
+
+
+
+
+public function checkIsPostInFavouritePosts($post_id ){
+
+$user_id = (int)$_SESSION['user_id'];
+$sql = 'select * from favourite_posts where post_id = ? and user_id = ? ';
+$query =  $this -> connect() -> prepare($sql );
+$query -> execute([ $post_id , $user_id ]);
+$results =  $query -> fetchAll();
+if( count($results ) == 0 ){
+
+return true;
+
+} else {
+
+    return false;
+}
+
+}// checkIsPostInFavouritePosts
+
+public function addToFavouritePosts($post_id ){
+	$user_id = (int)$_SESSION['user_id'];
+
+$sql = 'insert into favourite_posts ( post_id , user_id ) values ( ? , ? )';
+$query = $this -> connect() -> prepare  ( $sql );
+$query -> execute([ $post_id , $user_id]);
+
+echo 'Added to favourite posts.';
+header('Location:' . $_SERVER['HTTP_REFERER']);
+exit();
+
+}// addToFavouritePosts
+
+
+
+
 public function getAllCategoryPosts($category_id ){
 
 

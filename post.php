@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once 'include/db.inc.php';
 require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
@@ -86,6 +87,82 @@ $timeago = new get_timeago;
 </a></p>
 
 <br><br>
+
+<?php 
+
+$user = new User();
+if( $user -> checkIsUserLoggedIn()){
+$favourites = new BLog;
+
+$post_id = $blog -> getPostContent($slug)['id'];
+?>
+
+
+
+<form action="" method="post">
+<?php 
+if( $favourites -> checkIsPostInFavouritePosts($post_id ) ){
+
+
+if( isset($_POST['addToFavouritePosts'])){
+
+    $favourites -> addToFavouritePosts($post_id);
+
+}
+
+
+?>
+  <button name="addToFavouritePosts" type="submit" class="btn btn-primary" >Add to favourite posts</button>
+
+<?php
+
+} else {
+if( isset($_POST['removeFromFavouritePosts'])){
+
+    $favourites -> removeFromFavouritePosts($post_id);
+
+
+}
+
+
+
+
+?>
+
+  <button name="removeFromFavouritePosts" type="submit" class="btn btn-primary" >Remove from favourite posts</button>
+
+<?php
+
+}
+
+?>  
+
+
+
+
+</form>
+
+
+<?php
+} else {
+
+  echo 'You must be logged in';
+}
+
+
+ ?>
+
+
+
+
+
+
+
+<br><br>
+
+
+
+
 <div id="disqus_thread"></div>
 <script>
     /**
@@ -99,17 +176,28 @@ $timeago = new get_timeago;
     */
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
-    s.src = 'https://ENTER_YOUR_DISQUS_ID.disqus.com/embed.js';
+    s.src = 'https://clean-blog-2.disqus.com/embed.js';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
     })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <br>
+
+
+
+
+
         </div>
       </div>
     </div>
   </article>
+
+
+
+
+
+
 
 
 <?php require_once 'partials/__footer.php' ?>
@@ -120,7 +208,8 @@ $timeago = new get_timeago;
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
-  <script id="dsq-count-scr" src="//ENTER_YOUR_DISQUS_ID.disqus.com/count.js" async></script>
+  <script id="dsq-count-scr" src="//clean-blog-2.disqus.com/count.js" async></script>
 </body>
 
 </html>
+<?php ob_end_flush() ?>

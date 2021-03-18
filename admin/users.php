@@ -76,7 +76,7 @@ if (count( $users -> getAllRegisteredUsers() )> 0 ) {
                                         <th>Role</th>
                                         <th>Created at</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th colspan="2">Action</th>
                                     </tr>
                                         </thead>
                                         <tbody>  
@@ -121,6 +121,8 @@ if( $user['active'] == 1 ){
                                         </td>
                                         <td class="text-right">
                                             <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+                                        </td>
+                                        <td>
                                             <a href="" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
