@@ -253,7 +253,7 @@ $_SESSION['banned']= $result['banned'];
 $_SESSION['active']= $result['active'];
 $_SESSION['ip_address']= $result['ip_address'];
 $_SESSION['featured_image']= $result['featured_image'];
-header('Refresh:5;URL=index.php');
+header('Refresh:5;URL=' . $_SERVER['HTTP_REFERER']);
  $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     $msg->success('You are logged');
    
