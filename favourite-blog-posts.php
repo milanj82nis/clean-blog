@@ -41,6 +41,12 @@ if( !$user -> checkIsUserLoggedIn()){
 $blog = new Blog;
 $user = new User;
 $posts = $blog -> getAllFavouriteBlogPosts()['posts'];
+if( count($posts ) == 0 ){
+
+echo 'You dont have any favourite posts.';
+
+} else {
+
 
 foreach($posts as $post ){
 
@@ -104,6 +110,10 @@ $perPage = $blog -> getAllFavouriteBlogPosts()['per-page'];
 <?php
 
 }// main if
+
+
+  
+}
  ?>
        
     

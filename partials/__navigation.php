@@ -17,7 +17,9 @@
 
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
-          </li>
+          </li>         
+
+
 <?php 
 $logged = new User();
 
@@ -90,8 +92,6 @@ $userLogout -> userLogout();
 
 
  ?>
-
-
 
 
 

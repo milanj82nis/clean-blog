@@ -109,6 +109,11 @@ echo $msg -> display();
                                         <button type="submit" name="userLogin" class="btn btn-primary">
                                         Login
                                         </button>
+
+
+<a href="password-reset.php" class="btn btn-primary">Password reset</a>
+
+
                                     </div>
                                 </div>
                             </form>

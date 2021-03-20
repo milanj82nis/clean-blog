@@ -14,6 +14,8 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
 <?php require_once 'partials/__head.php' ;?>
 
+
+
 </head>
 
 <body>
