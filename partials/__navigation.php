@@ -93,6 +93,15 @@ $userLogout -> userLogout();
 
  ?>
 
+<li class="nav-link">
+  
+<form action="search.php" method="get">
+  
+<input type="text" size="20" class="form-control form-control-sm" name="keyword">
+
+</form>
+
+</li>
 
 
 

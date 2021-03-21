@@ -73,7 +73,7 @@ $timeago = new get_timeago;
 
 
  <p>Category : 
-            <a href="category.php?slug=<?php echo $blog -> getCategoryDetails($category_id)['slug'];?>">
+            <a href="category.php?id=<?php echo $blog -> getCategoryDetails($category_id)['id'];?>">
 
 <?php echo $blog -> getCategoryDetails($category_id)['name']; ?>
 
