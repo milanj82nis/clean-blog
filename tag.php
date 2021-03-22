@@ -5,9 +5,9 @@ require_once 'include/config.inc.php';
 require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
-$category_id = (int)$_GET['id'];
-if(!$category_id){
-  header('Location:categories.php');
+$tag_id = (int)$_GET['tag_id'];
+if(!$tag_id){
+  header('Location:' . $_SERVER['HTTP_REFERER']);
   exit();
 }
 ?>
@@ -15,7 +15,7 @@ if(!$category_id){
 <html lang="en">
 
 <head>
-    <title>View Category | <?php echo SITE_NAME; ?></title>
+    <title>View Tag | <?php echo SITE_NAME; ?></title>
 
 <?php require_once 'partials/__head.php' ;?>
 
@@ -38,7 +38,7 @@ if(!$category_id){
 <?php 
 $blog = new Blog;
 $user = new User;
-$posts = $blog -> getAllCategoryPosts($category_id)['posts'];
+$posts = $blog -> getAllTagPosts($tag_id)['posts'];
 
 if( count($posts ) == 0 )
 {
@@ -82,7 +82,7 @@ $timeago = new get_timeago;
 }// foreach
 
 if( count($posts ) > 0 ){
-$pages = $blog -> getAllCategoryPosts($category_id)['pages'];
+$pages = $blog -> getAllTagPosts($tag_id)['pages'];
 
 ?>
 <nav aria-label="Page navigation example">
@@ -92,13 +92,13 @@ $pages = $blog -> getAllCategoryPosts($category_id)['pages'];
 
 <?php
 for ( $x = 1 ;$x <= $pages ; $x++ ){
-$perPage = $blog -> getAllCategoryPosts($category_id)['per-page'];
+$perPage = $blog -> getAllTagPosts($tag_id)['per-page'];
 
 ?>
 
 
 
- <li class="page-item"><a class="page-link" href="?id=<?php echo $category_id;?>&page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
+ <li class="page-item"><a class="page-link" href="?tag_id=<?php echo $tag_id;?>&page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
 
 
 

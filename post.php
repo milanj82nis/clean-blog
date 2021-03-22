@@ -82,7 +82,8 @@ $timeago = new get_timeago;
 </p>
 <p>
              Tag : 
-            <a href="tag.php?slug=<?php echo $blog -> getTagDetails($tag_id)['slug'];?>">
+             
+ <a href="tag.php?tag_id=<?php echo $blog -> getPostContent($slug)['tag_id'];?>">
               <?php echo $blog -> getTagDetails($tag_id)['name']; ?>
 </a></p>
 
