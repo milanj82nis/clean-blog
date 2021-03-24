@@ -3,6 +3,7 @@ require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessage
 
 class Admin extends DbConnect{
 
+
 public function checkIsUserAdmin(){
 
 	if($_SESSION['is_admin'] == 1 ){
@@ -316,12 +317,66 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
 }// checkIsPostFormEmpty
 
-
-
-
 }// addPost
 
+public function deleteBlogCategory($category_id){
 
+$sql = 'delete from categories where id = :category_id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+
+$query -> bindValue( ':category_id' , $category_id );
+
+$query -> execute();
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Category deleted.');
+
+header('Location:categories.php');
+
+
+}// deleteBlogCategory
+
+
+
+
+
+
+public function editBlogCategory( $name  , $category_id ){
+
+if( $this -> checkIsAllCategoryFieldsNotEmpty($name)){
+
+
+if( $this -> checkIsCategoryExits($name)){
+
+$slug =  $this -> create_slug($name);
+
+
+
+
+	$sql = 'update categories set name= ?  , slug = ? where id = ? limit 1 ';
+
+	$query = $this -> connect() -> prepare($sql);
+	$query -> execute([ $name , $slug , $category_id ]);
+
+
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Category is changed.');
+ 
+} else {
+
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This category is in database.');
+} // checkIsCategoryExits
+
+
+
+} else {
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+}// checkIsAllCategoryFieldsNotEmpty
+
+}// addCategory
 
 
 

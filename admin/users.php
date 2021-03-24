@@ -118,20 +118,20 @@ if( $user['active'] == 1 ){
  ?>
 
 
-                                        </td>
-                                        <td class="text-right">
-                                            <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+    </td>
+        <td class="text-right">
+               <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+        </td>
+        <td>
+                <a href="" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
+        </td>
+</tr>
                                   
 <?php
 }// end foreach
 
 } else {
-   echo 'There is registed users.';
+   echo 'There is no registed users.';
 }
 
 

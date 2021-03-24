@@ -1,10 +1,10 @@
 <?php 
-ob_start();
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
 require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
 
 $admin = new Admin;
 if( !$admin -> checkIsUserAdmin()){
@@ -26,7 +26,7 @@ if( !$admin -> checkIsUserAdmin()){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Blog categories | <?php echo SITE_NAME ?></title>
+    <title>Edit blog category | <?php echo SITE_NAME ?></title>
     <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
     <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
@@ -44,87 +44,72 @@ if( !$admin -> checkIsUserAdmin()){
 <?php require_once 'partials/__navigation.php' ?>
 
 
-        <div class="content">
+   
+     <div class="content">
                 <div class="container">
                     <div class="page-title">
-                        <h3>Blog tags</h3>
+                        <h3>Edit category</h3>
                     </div>
                     <div class="row">
-                          <div class="col-md-12 col-lg-12">
+                        
+                        <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-header">Blog tags</div>
+                                <div class="card-header">Edit category</div>
                                 <div class="card-body">
-                                    <p class="card-title"></p>
-                                   
+                                    
 <?php 
 try {
 
-$tags = new Admin;
 
-if (count( $tags -> getAllBlogTags() )> 0 ) {
+if( isset($_POST['editBlogCategory'])){
 
-?>
-         <table class="table table-hover" id="dataTables-example" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th colspan="3">Action</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>  
-<?php
+  $name = htmlspecialchars(trim($_POST['name']));
+$category_id = (int)$_GET['category_id'];
 
-    foreach ( $tags -> getAllBlogTags() as $tag ){
-?>
- <tr>
-                                                <td><?php echo $tag['id']; ?></td>
-                                                <td><?php echo $tag['name']; ?></td>
-                                           <td class="text-right">
-               <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
-        </td>
-        <td>
+$admin = new Admin;
+$admin -> editBlogCategory( $name  , $category_id );
 
-
-    <a class="btn btn-outline-danger btn-rounded"  ><i class="fas fa-trash"></i></a>
-
-       
-        </td>
-                                                
-                                            </tr>
-<?php
-}// end foreach
-
-} else {
-   echo 'There is no tags.';
 }
 
-
-
-
-
-
-} catch ( PDOException $e ){
+} catch( PDOException $e ){
     echo $e -> getMessage();
 }
 
+?>
 
- ?>
-
-
-                                           
-                                        </tbody>
-                                    </table>
+<?php $msg->display(); ?>
+                                    <form accept-charset="utf-8" method="post" action="">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2" for="email">Category name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="name" placeholder="Category name" class="form-control">
+                                                <small class="form-text">Example help text that remains unchanged.</small>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-sm-10 offset-sm-2">
+                                                <input type="submit" name="editBlogCategory" class="btn btn-primary">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-               
-
-
+                       
+                       
+                        
+                       
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
         </div>
     </div>
     <script src="assets/vendor/jquery/jquery.min.js"></script>
@@ -135,4 +120,3 @@ if (count( $tags -> getAllBlogTags() )> 0 ) {
 </body>
 
 </html>
-<?php ob_end_flush(); ?>
