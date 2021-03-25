@@ -407,6 +407,20 @@ public function getUserDetails($id){
 }// getUserDetails
 
 
+public function registeredUsers(){
+
+    $sql =  'select * from users ';
+
+    $query = $this-> connect() -> query  ( $sql );
+
+    $users = $query -> fetchAll();
+
+    return $users;
+}// registeredUsers
+
+
+
+
 
 
 

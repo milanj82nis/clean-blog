@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
@@ -120,10 +121,29 @@ if( $user['active'] == 1 ){
 
     </td>
         <td class="text-right">
-               <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+               <a href="edit-user.php?user_id=<?php echo $user['id']; ?>" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
         </td>
         <td>
-                <a href="" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
+             <?php 
+
+if( isset($_POST['deleteUserAccount'])){
+
+$admin = new Admin();
+$admin -> deleteUserAccount($_GET['user_id']);
+
+
+}// main isset
+
+
+
+ ?>
+    <form action="?user_id=<?php echo $user['id'];?>" method="post">
+
+    
+    <button class="btn btn-outline-danger btn-rounded" name="deleteUserAccount" type="submit" ><i class="fas fa-trash"></i></button>
+
+
+</form>
         </td>
 </tr>
                                   
@@ -169,3 +189,4 @@ if( $user['active'] == 1 ){
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

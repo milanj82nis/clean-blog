@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
@@ -75,7 +76,7 @@ if (count( $posts -> getAllPosts() )> 0 ) {
                                         <th>Views</th>
                                         <th>Created at</th>
                                         <th>Featured</th>
-                                        <th></th>
+                                        <th colspan="3">Action</th>
                                     </tr>
                                         </thead>
                                         <tbody>  
@@ -101,8 +102,30 @@ if($post['featured'] == 1 ){
                                         </td>
 
                                         <td class="text-right">
-                                            <a href="" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
-                                            <a href="" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
+                                            <a href="edit-post.php?post_id=<?php echo $post['id']; ?>" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+
+</td>
+<td>
+<?php 
+
+if( isset($_POST['deleteBlogPost'])){
+
+$admin = new Admin();
+$admin -> deleteBlogPost($_GET['post_id']);
+
+
+}// main isset
+
+
+
+ ?>
+    <form action="?post_id=<?php echo $post['id'];?>" method="post">
+
+    
+    <button class="btn btn-outline-danger btn-rounded" name="deleteBlogPost" type="submit" ><i class="fas fa-trash"></i></button>
+
+
+</form>
                                         </td>
                                     </tr>
                                   
@@ -159,3 +182,4 @@ if($post['featured'] == 1 ){
 </body>
 
 </html>
+<?php ob_end_flush(); ?>
