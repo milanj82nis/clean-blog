@@ -9,3 +9,5 @@ In same folder there is sql file so upload him in phpmyadmin and make all tables
 In user.class.php in function sendMessage you need to change server details for phpmailer  .
 
 SQL file with all tables can be founded in include folder.
+
+In files login.php , register.php , contact.php and password-reset.php you need to change and add RECAPTCHA_SITE_KEY, and in user.class.php you need to change RECAPTCHA_SECRET_KEY with your own.
