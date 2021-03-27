@@ -61,8 +61,28 @@ foreach ($user->registeredUsers() as $user){
       <th scope="row"><?php echo $user['id'] ?></th>
       <td><?php echo $user['name'] ;?></td>
       <td><?php  echo $user['email'];?></td>
-      <td><a href="">View profile</a></td>
-      <td><a href="">Send message</a></td>
+      <td>
+        
+<?php
+if( $_SESSION['user_id'] == $user['id']){
+?>
+<a href="my-account.php">My account</a>
+
+<?php
+
+} else {
+?>
+
+<a href="view-user.php?id=<?php echo $user['id']; ?>">View user profile</a>
+
+<?php
+}
+
+
+
+?>
+      </td>
+      <td><a href="messages.php?from_user=<?php echo $user['id']; ?>">Send message</a></td>
       <td><a href="">Block user</a></td>
      
     </tr>

@@ -9,9 +9,71 @@ require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.p
 
 class User extends DbConnect {
 
+private function checkIsUpdateUserFormEmpty($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code){
+
+    if( !empty($name ) && !empty($email)  && !empty($website_url)  && !empty($about_me) && !empty($phone) && !empty($street) && !empty($state) && !empty($postal_code)  ){
+
+        return true;
+    } else {
+        return false;
+    }
 
 
 
+
+}// checkIsUpdateUserFormEmpty
+
+public function updateMyProfile($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code ){
+
+if( $this -> checkIsUpdateUserFormEmpty($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code)) {
+
+if( $this -> checkIsEmailRegistered($email)){
+
+if( $this -> chekcIsValidEmail($email)){
+
+$user_id = (int)$_SESSION['user_id'];
+$sql = 'update users set name = :name , email = :email , website_url = :website_url , 
+about_me = :about_me , phone = :phone , street = :street , city = :city ,state = :state ,postal_code = :postal_code  where id = :id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+$query -> bindValue( ':name' , $name );
+$query -> bindValue( ':email' , $email );
+$query -> bindValue( ':website_url' , $website_url );
+$query -> bindValue( ':about_me' , $about_me );
+$query -> bindValue( ':phone' , $phone );
+$query -> bindValue( ':street' , $street );
+$query -> bindValue( ':city' , $city );
+$query -> bindValue( ':state' , $state );
+$query -> bindValue( ':postal_code' , $postal_code );
+$query -> bindValue( ':id' , $user_id );
+
+$query -> execute();
+
+header('Location:my-account.php');
+
+           $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->success('Your account is updated.');
+         
+
+
+} else {
+           $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Please , enter enter valid email address.');
+         
+}
+} else{
+          $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Email address is already taken.');
+      
+}
+} else {
+
+        $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Please , fill all fields in form.');
+ 
+}
+
+}// updateMyProfile
 
 
 public function userLogout(){
@@ -400,6 +462,11 @@ public function getUserDetails($id){
     $query -> execute([ $id]);
 
     $user = $query-> fetch();
+
+    if(!$user ){
+        header('Location:users.php');
+        exit();
+    }
 
     return $user;
 
