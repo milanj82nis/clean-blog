@@ -113,7 +113,7 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 public function sendMessage( $name , $email , $message , $subject ){
 
-$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$secretkey = "RECAPTCHA_SECRET_KEY";
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -232,7 +232,7 @@ if ( $password == $password_confirmation ){
 public function userRegistration( $name , $email , $password , $password_confirmation){
 
 
-$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$secretkey = "RECAPTCHA_SECRET_KEY";
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -314,7 +314,7 @@ private function checkIsLoginFormEmpty($email , $password ){
 public function userLogin($email , $password ){
 
 
-$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$secretkey = "RECAPTCHA_SECRET_KEY";
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -390,7 +390,7 @@ header('Refresh:5;URL=' . $_SERVER['HTTP_REFERER']);
 public function passwordReset($email){
 
 
-$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$secretkey = "RECAPTCHA_SECRET_KEY";
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
