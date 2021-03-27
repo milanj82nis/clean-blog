@@ -1,4 +1,5 @@
 <?php 
+require_once 'include/recaptchalib.php';
 require 'include/vendor/phpmailer/phpmailer/src/Exception.php';
 require 'include/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'include/vendor/phpmailer/phpmailer/src/SMTP.php';
@@ -112,6 +113,20 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 public function sendMessage( $name , $email , $message , $subject ){
 
+$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=contact.php');
+} else {
+
+
 
 if ( $this -> checkIsEmailFormEmpty($name , $email , $message , $subject )){
 
@@ -135,9 +150,6 @@ try {
     $mail->addAddress( 'milanj31@gmail.com', 'Milan Janković');     //Add a recipient
 
 
-
-
-
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = $subject;
@@ -154,10 +166,6 @@ try {
 	echo $e -> getMessage();
 }
 
-
-
-
-
 } else {
         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     $msg->error('Please , enter valid email address.');
@@ -171,7 +179,7 @@ try {
 }// checkIsEmailFormEmpty
 
 
-
+}// send message
 
 
 }// sendMessage
@@ -222,6 +230,21 @@ if ( $password == $password_confirmation ){
 
 
 public function userRegistration( $name , $email , $password , $password_confirmation){
+
+
+$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=register.php');
+} else {
+
 
 if ($this -> checkIsRegisterFormEmpty( $name , $email , $password , $password_confirmation)){
 
@@ -276,7 +299,7 @@ $query -> execute([ $name , $email , $hashed_password , $ip_address , $created_a
     
   
 }// checkIsRegisterFormEmpty
-
+}// validateRecaptcha
 }// userRegistration
 
 private function checkIsLoginFormEmpty($email , $password ){
@@ -289,6 +312,21 @@ private function checkIsLoginFormEmpty($email , $password ){
 
 }// checkIsLoginFormEmpty
 public function userLogin($email , $password ){
+
+
+$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:3;url=login.php');
+} else {
+
 
 if( $this -> checkIsLoginFormEmpty($email , $password )){
 
@@ -344,10 +382,26 @@ header('Refresh:5;URL=' . $_SERVER['HTTP_REFERER']);
    
 }// checkIsLoginFormEmpty
 
+}
+
 
 }// userLogin
 
 public function passwordReset($email){
+
+
+$secretkey = "6LcCgJEaAAAAAARknNnSxOOEG6_H8QhtRweCwtyT";
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=password-reset.php');
+} else {
 
 
 if( $this -> chekcIsValidEmail($email)){
@@ -379,6 +433,7 @@ if ( count($results )> 0 ){
        $msg->success('Your password is sent on your email address');
    
 $mail = new PHPMailer(true);
+
 
 try {
 
@@ -427,7 +482,7 @@ $message = 'Your new password is : ' . $password;
    
    
 }
-
+}// recaptcha validation
 
 }// passwordReset
 

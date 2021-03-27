@@ -84,7 +84,7 @@ $user -> passwordReset( $email  );
 ?>
 <?php $msg->display(); ?>
 
-                            <form name="my-form"  action="password-reset.php" method="POST">
+                            <form name="my-form"  action="password-reset.php" method="POST" id="password-reset">
                                 
 
                                 <div class="form-group row">
@@ -93,6 +93,18 @@ $user -> passwordReset( $email  );
                                         <input type="text" id="email_address" class="form-control" name="email">
                                     </div>
                                 </div>
+
+                                                               
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Recaptcha</label>
+                                    <div class="col-md-6">
+                                       <div class="g-recaptcha" data-sitekey="6LcCgJEaAAAAALqrBSwGmnmxcyOpjhvOntnp_9vl"></div>
+                                    </div>
+                                </div>
+
+                                
+
+                                
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" name="paswordReset" class="btn btn-primary">
                                         Password reset
@@ -118,6 +130,12 @@ $user -> passwordReset( $email  );
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
+ <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 
 </body>
 

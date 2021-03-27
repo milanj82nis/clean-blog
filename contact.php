@@ -61,11 +61,18 @@ try {
 <?php $msg->display(); ?>
 
 
-      <form action="contact.php" method="post">
+      <form action="contact.php" method="post" id="demo-form">
         <input class="form-control" type="text" name="name" placeholder="Name..." /><br />
         <input class="form-control" type="text" name="subject" placeholder="Subject..." /><br />
         <input class="form-control" type="email" name="email" placeholder="E-mail..." /><br />
         <textarea class="form-control"   id="editor" rows="20" name="message" placeholder="How can we help you?" style="height:150px;"></textarea><br />
+
+
+
+
+                             
+                                       <div class="g-recaptcha" data-sitekey="6LcCgJEaAAAAALqrBSwGmnmxcyOpjhvOntnp_9vl"></div>
+                                   <br><br>
         <input class="btn btn-primary" type="submit" name="sendMessage" value="Send" /><br /><br />
       </form>
   </div>
@@ -122,6 +129,12 @@ try {
       console.error( err.stack );
     } );
 </script>
+ <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 
 </body>
 
