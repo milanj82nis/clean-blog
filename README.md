@@ -10,4 +10,16 @@ In user.class.php in function sendMessage you need to change server details for 
 
 SQL file with all tables can be founded in include folder.
 
-In files login.php , register.php , contact.php and password-reset.php you need to change and add RECAPTCHA_SITE_KEY, and in user.class.php you need to change RECAPTCHA_SECRET_KEY with your own.
+
+In config.inc.php file you need to change and save info about your recaptcha and mailtrap keys.
+
+
+
+
+
+
+
+
+
+Security Vulnerabilities
+If you have found a security issue, please contact the author directly at milanj31@gmail.com
