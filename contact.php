@@ -71,7 +71,7 @@ try {
 
 
                              
-                                       <div class="g-recaptcha" data-sitekey="RECAPTCHA_SITE_KEY"></div>
+                                       <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY ?>"></div>
                                    <br><br>
         <input class="btn btn-primary" type="submit" name="sendMessage" value="Send" /><br /><br />
       </form>

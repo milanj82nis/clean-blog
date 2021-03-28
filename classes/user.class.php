@@ -113,7 +113,7 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 public function sendMessage( $name , $email , $message , $subject ){
 
-$secretkey = "RECAPTCHA_SECRET_KEY";
+$secretkey = RECAPTCHA_SECRET_KEY ;
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -136,18 +136,18 @@ $mail = new PHPMailer(true);
 try {
 
  //Server settings
-
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+$mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = PHP_MAILER_SERVER;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '3f94cc5293689a';                     //SMTP username
-    $mail->Password   = 'fdb778d8ba98f1';                               //SMTP password
+    $mail->Username   = PHP_MAILER_USERNAME;                     //SMTP username
+    $mail->Password   = PHP_MAILER_PASSWORD;    
+                                                
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
     $mail->setFrom($email, $name);
-    $mail->addAddress( 'milanj31@gmail.com', 'Milan Janković');     //Add a recipient
+    $mail->addAddress( ADMIN_EMAIL_ADDRESS,  ADMIN_NAME );     //Add a recipient
 
 
     //Content
@@ -232,7 +232,7 @@ if ( $password == $password_confirmation ){
 public function userRegistration( $name , $email , $password , $password_confirmation){
 
 
-$secretkey = "RECAPTCHA_SECRET_KEY";
+$secretkey = RECAPTCHA_SECRET_KEY;
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -314,7 +314,7 @@ private function checkIsLoginFormEmpty($email , $password ){
 public function userLogin($email , $password ){
 
 
-$secretkey = "RECAPTCHA_SECRET_KEY";
+$secretkey = RECAPTCHA_SECRET_KEY;
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -390,7 +390,7 @@ header('Refresh:5;URL=' . $_SERVER['HTTP_REFERER']);
 public function passwordReset($email){
 
 
-$secretkey = "RECAPTCHA_SECRET_KEY";
+$secretkey = RECAPTCHA_SECRET_KEY;
 $response = $_POST["g-recaptcha-response"];
 $verify = new recaptchalib($secretkey, $response);
 
@@ -440,10 +440,11 @@ try {
  //Server settings
 
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+    $mail->Host       = PHP_MAILER_SERVER;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '3f94cc5293689a';                     //SMTP username
-    $mail->Password   = 'fdb778d8ba98f1';                               //SMTP password
+    $mail->Username   = PHP_MAILER_USERNAME;                     //SMTP username
+    $mail->Password   = PHP_MAILER_PASSWORD;    
+                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 

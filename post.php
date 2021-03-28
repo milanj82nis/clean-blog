@@ -177,7 +177,7 @@ if( isset($_POST['removeFromFavouritePosts'])){
     */
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
-    s.src = 'https://clean-blog-2.disqus.com/embed.js';
+    s.src = '<?php echo DISQUS_URL_CODE  ?>';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
     })();
@@ -209,7 +209,7 @@ if( isset($_POST['removeFromFavouritePosts'])){
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
-  <script id="dsq-count-scr" src="//clean-blog-2.disqus.com/count.js" async></script>
+  <script id="dsq-count-scr" src="<?php  echo DISQUS_SCRIPT_CODE ?>" async></script>
 </body>
 
 </html>

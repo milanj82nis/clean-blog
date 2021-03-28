@@ -102,7 +102,7 @@ echo $msg -> display();
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Recaptcha</label>
                                     <div class="col-md-6">
-                                       <div class="g-recaptcha" data-sitekey="RECAPTCHA_SITE_KEY"></div>
+                                       <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY ?>"></div>
                                     </div>
                                 </div>
 
