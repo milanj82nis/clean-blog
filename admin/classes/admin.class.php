@@ -3,6 +3,7 @@ require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessage
 
 class Admin extends DbConnect{
 
+
 public function checkIsUserAdmin(){
 
 	if($_SESSION['is_admin'] == 1 ){
@@ -285,6 +286,9 @@ if( count($titles ) == 0 ){
 	return false;
 }
 }// checkIsTitleExitsInPosts
+
+
+
 public function addPost($title , $category_id , $tag_id , $featured_image ,
      $excerpt , $content , $featured ){
 if($this -> checkIsPostFormEmpty($title , $category_id , $tag_id , $featured_image ,
@@ -316,10 +320,257 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 
 }// checkIsPostFormEmpty
 
-
-
-
 }// addPost
+
+public function deleteBlogCategory($category_id){
+
+$sql = 'delete from categories where id = :category_id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+
+$query -> bindValue( ':category_id' , $category_id );
+
+$query -> execute();
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Category deleted.');
+
+header('Location:categories.php');
+
+
+}// deleteBlogCategory
+
+
+
+
+
+
+public function editBlogCategory( $name  , $category_id ){
+
+if( $this -> checkIsAllCategoryFieldsNotEmpty($name)){
+
+
+if( $this -> checkIsCategoryExits($name)){
+
+$slug =  $this -> create_slug($name);
+
+
+
+
+	$sql = 'update categories set name= ?  , slug = ? where id = ? limit 1 ';
+
+	$query = $this -> connect() -> prepare($sql);
+	$query -> execute([ $name , $slug , $category_id ]);
+
+
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Category is changed.');
+ 
+} else {
+
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This category is in database.');
+} // checkIsCategoryExits
+
+
+
+} else {
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+}// checkIsAllCategoryFieldsNotEmpty
+
+}// addCategory
+
+
+
+public function editBlogTag( $name  , $tag_id ){
+
+if( $this -> checkIsAllCategoryFieldsNotEmpty($name)){
+
+
+if( $this -> checkIsTagExist($name)){
+
+$slug =  $this -> create_slug($name);
+
+
+
+
+	$sql = 'update tags set name= ?  , slug = ? where id = ? limit 1 ';
+
+	$query = $this -> connect() -> prepare($sql);
+	$query -> execute([ $name , $slug , $tag_id ]);
+
+
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Tag is changed.');
+ 
+} else {
+
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This tag is in database.');
+} // checkIsCategoryExits
+
+
+
+} else {
+	 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+}// checkIsAllCategoryFieldsNotEmpty
+
+}// addCategory
+
+public function deleteBlogTag($tag_id){
+
+
+$sql = 'delete from tags where id = :tag_id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+
+$query -> bindValue( ':tag_id' , $tag_id );
+
+$query -> execute();
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Tag is  deleted.');
+
+header('Location:tags.php');
+
+
+
+}// DeleteBlogTag
+
+
+
+
+public function deleteBlogPost($post_id){
+
+
+$sql = 'delete from posts where id = :post_id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+
+$query -> bindValue( ':post_id' , $post_id );
+
+$query -> execute();
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Post is  deleted.');
+
+header('Location:posts.php');
+
+
+
+}// DeleteBlogTag
+
+
+
+
+public function editPost($title , $category_id , $tag_id , $featured_image ,
+     $excerpt , $content , $featured  , $post_id){
+if($this -> checkIsPostFormEmpty($title , $category_id , $tag_id , $featured_image ,
+     $excerpt , $content , $featured )){
+
+if($this -> checkIsTitleExitsInPosts($title)){
+$created_at = date('Y-m-d H:i:s');
+$updated_at = date( 'Y-m-d H:i:s');
+$slug =   $this -> create_slug($title);
+$user_id = (int)$_SESSION['user_id'];
+
+$sql = 'update posts set title = ? , slug = ? , user_id = ? , category_id = ? , tag_id = ? , excerpt = ? , content = ? , featured = ? , featured_image = ? where id = ?  ';
+$query = $this -> connect() -> prepare($sql);
+$query -> execute([ $title , $slug , $user_id , $category_id , $tag_id , $excerpt , $content , $featured , $featured_image , $post_id  ]);
+
+
+
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('Posts is aded in database.');
+} else{
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please, change your title.');
+}// checkIsTitleExitsInPosts
+
+} else{
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+
+}// checkIsPostFormEmpty
+
+}// editPost
+
+
+
+
+
+
+public function deleteUserAccount($user_id){
+
+
+$sql = 'delete from users where id = :user_id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+
+$query -> bindValue( ':user_id' , $user_id );
+
+$query -> execute();
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('User is  deleted.');
+
+header('Location:users.php');
+
+
+
+}// deleteUserAccount
+
+
+
+public function editUser($name , $email , $password , $password_confirmation ,
+ $active , $is_admin , $user_id ){
+
+if( $this -> checkIsUsersFormEmpty($name , $email , $password , $password_confirmation ,
+ $active , $is_admin )){
+
+if( $this -> checkIsEmailValid($email)){
+if( $this -> checkIfPasswordsSame($password , $password_confirmation)){
+if( $this -> checkIsEmailExistsInDb($email)){
+
+$hashed_pasword = password_hash( $password , PASSWORD_DEFAULT);
+$created_at = date('Y-m-d H:i:s');
+$updated_at = date('Y-m-d H:i:s');
+$slug =  $this -> create_slug($name);
+
+$sql = 'update users set name = ? , email = ? , slug = ? , password = ? , active = ? ,  is_admin = ? where id = ?   ';
+
+$query = $this -> connect()-> prepare($sql);
+$query -> execute([$name , $email , $slug , $hashed_pasword , $active , $is_admin , $user_id  ]);
+
+
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success('User is changed.');
+	
+} else {
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('This email already registered.');
+	
+}
+
+}else {
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Your passwords need to be same.');
+}// checkIfPasswordsSame
+
+}else  {
+	$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , enter valid email address');
+} // checkIsEmailValid
+
+} else {
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('Please , fill all fields in form.');
+}// checkIsUsersFormEmpty
+
+}// addUser
+
+
+
 
 
 

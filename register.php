@@ -86,7 +86,7 @@ $user -> userRegistration( $name , $email , $password , $password_confirmation);
 <?php $msg->display(); ?>
 
 
-                            <form name="my-form"  action="register.php" method="POST">
+                            <form name="my-form"  action="register.php" method="POST" id="demo-form">
                                 <div class="form-group row">
                                     <label for="full_name" class="col-md-4 col-form-label text-md-right">Full Name</label>
                                     <div class="col-md-6">
@@ -117,6 +117,12 @@ $user -> userRegistration( $name , $email , $password , $password_confirmation);
                                 </div>
 
                                                                
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Recaptcha</label>
+                                    <div class="col-md-6">
+                                       <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY ?>"></div>
+                                    </div>
+                                </div>
 
                                 
 
@@ -146,7 +152,12 @@ $user -> userRegistration( $name , $email , $password , $password_confirmation);
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
-
+ <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 </body>
 
 </html>

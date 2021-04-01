@@ -98,7 +98,7 @@ $perPage = $blog -> getAllCategoryPosts($category_id)['per-page'];
 
 
 
- <li class="page-item"><a class="page-link" href="?id=<?php echo $category_id;?>&&page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
+ <li class="page-item"><a class="page-link" href="?id=<?php echo $category_id;?>&page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
 
 
 

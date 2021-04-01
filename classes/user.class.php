@@ -1,4 +1,5 @@
 <?php 
+require_once 'include/recaptchalib.php';
 require 'include/vendor/phpmailer/phpmailer/src/Exception.php';
 require 'include/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'include/vendor/phpmailer/phpmailer/src/SMTP.php';
@@ -9,9 +10,71 @@ require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.p
 
 class User extends DbConnect {
 
+private function checkIsUpdateUserFormEmpty($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code){
+
+    if( !empty($name ) && !empty($email)  && !empty($website_url)  && !empty($about_me) && !empty($phone) && !empty($street) && !empty($state) && !empty($postal_code)  ){
+
+        return true;
+    } else {
+        return false;
+    }
 
 
 
+
+}// checkIsUpdateUserFormEmpty
+
+public function updateMyProfile($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code ){
+
+if( $this -> checkIsUpdateUserFormEmpty($name , $email , $website_url , $about_me , $phone , $street , $city , $state , $postal_code)) {
+
+if( $this -> checkIsEmailRegistered($email)){
+
+if( $this -> chekcIsValidEmail($email)){
+
+$user_id = (int)$_SESSION['user_id'];
+$sql = 'update users set name = :name , email = :email , website_url = :website_url , 
+about_me = :about_me , phone = :phone , street = :street , city = :city ,state = :state ,postal_code = :postal_code  where id = :id limit 1 ';
+
+$query = $this -> connect() -> prepare($sql);
+$query -> bindValue( ':name' , $name );
+$query -> bindValue( ':email' , $email );
+$query -> bindValue( ':website_url' , $website_url );
+$query -> bindValue( ':about_me' , $about_me );
+$query -> bindValue( ':phone' , $phone );
+$query -> bindValue( ':street' , $street );
+$query -> bindValue( ':city' , $city );
+$query -> bindValue( ':state' , $state );
+$query -> bindValue( ':postal_code' , $postal_code );
+$query -> bindValue( ':id' , $user_id );
+
+$query -> execute();
+
+header('Location:my-account.php');
+
+           $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->success('Your account is updated.');
+         
+
+
+} else {
+           $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Please , enter enter valid email address.');
+         
+}
+} else{
+          $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Email address is already taken.');
+      
+}
+} else {
+
+        $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+        $msg->error('Please , fill all fields in form.');
+ 
+}
+
+}// updateMyProfile
 
 
 public function userLogout(){
@@ -50,6 +113,20 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 public function sendMessage( $name , $email , $message , $subject ){
 
+$secretkey = RECAPTCHA_SECRET_KEY ;
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=contact.php');
+} else {
+
+
 
 if ( $this -> checkIsEmailFormEmpty($name , $email , $message , $subject )){
 
@@ -59,21 +136,18 @@ $mail = new PHPMailer(true);
 try {
 
  //Server settings
-
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+$mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = PHP_MAILER_SERVER;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '3f94cc5293689a';                     //SMTP username
-    $mail->Password   = 'fdb778d8ba98f1';                               //SMTP password
+    $mail->Username   = PHP_MAILER_USERNAME;                     //SMTP username
+    $mail->Password   = PHP_MAILER_PASSWORD;    
+                                                
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
     $mail->setFrom($email, $name);
-    $mail->addAddress( 'milanj31@gmail.com', 'Milan Janković');     //Add a recipient
-
-
-
+    $mail->addAddress( ADMIN_EMAIL_ADDRESS,  ADMIN_NAME );     //Add a recipient
 
 
     //Content
@@ -92,10 +166,6 @@ try {
 	echo $e -> getMessage();
 }
 
-
-
-
-
 } else {
         $msg = new \Plasticbrain\FlashMessages\FlashMessages();
     $msg->error('Please , enter valid email address.');
@@ -109,7 +179,7 @@ try {
 }// checkIsEmailFormEmpty
 
 
-
+}// send message
 
 
 }// sendMessage
@@ -160,6 +230,21 @@ if ( $password == $password_confirmation ){
 
 
 public function userRegistration( $name , $email , $password , $password_confirmation){
+
+
+$secretkey = RECAPTCHA_SECRET_KEY;
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=register.php');
+} else {
+
 
 if ($this -> checkIsRegisterFormEmpty( $name , $email , $password , $password_confirmation)){
 
@@ -214,7 +299,7 @@ $query -> execute([ $name , $email , $hashed_password , $ip_address , $created_a
     
   
 }// checkIsRegisterFormEmpty
-
+}// validateRecaptcha
 }// userRegistration
 
 private function checkIsLoginFormEmpty($email , $password ){
@@ -227,6 +312,21 @@ private function checkIsLoginFormEmpty($email , $password ){
 
 }// checkIsLoginFormEmpty
 public function userLogin($email , $password ){
+
+
+$secretkey = RECAPTCHA_SECRET_KEY;
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:3;url=login.php');
+} else {
+
 
 if( $this -> checkIsLoginFormEmpty($email , $password )){
 
@@ -282,10 +382,26 @@ header('Refresh:5;URL=' . $_SERVER['HTTP_REFERER']);
    
 }// checkIsLoginFormEmpty
 
+}
+
 
 }// userLogin
 
 public function passwordReset($email){
+
+
+$secretkey = RECAPTCHA_SECRET_KEY;
+$response = $_POST["g-recaptcha-response"];
+$verify = new recaptchalib($secretkey, $response);
+
+if ($verify->isValid() == false) {
+// What happens when the CAPTCHA was entered incorrectly
+
+ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error('The reCAPTCHA wasn\'t entered correctly. Go back and try it again.');
+
+header('Refresh:5;url=password-reset.php');
+} else {
 
 
 if( $this -> chekcIsValidEmail($email)){
@@ -318,15 +434,17 @@ if ( count($results )> 0 ){
    
 $mail = new PHPMailer(true);
 
+
 try {
 
  //Server settings
 
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
+    $mail->Host       = PHP_MAILER_SERVER;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = '3f94cc5293689a';                     //SMTP username
-    $mail->Password   = 'fdb778d8ba98f1';                               //SMTP password
+    $mail->Username   = PHP_MAILER_USERNAME;                     //SMTP username
+    $mail->Password   = PHP_MAILER_PASSWORD;    
+                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
@@ -365,7 +483,7 @@ $message = 'Your new password is : ' . $password;
    
    
 }
-
+}// recaptcha validation
 
 }// passwordReset
 
@@ -401,10 +519,29 @@ public function getUserDetails($id){
 
     $user = $query-> fetch();
 
+    if(!$user ){
+        header('Location:users.php');
+        exit();
+    }
+
     return $user;
 
 
 }// getUserDetails
+
+
+public function registeredUsers(){
+
+    $sql =  'select * from users ';
+
+    $query = $this-> connect() -> query  ( $sql );
+
+    $users = $query -> fetchAll();
+
+    return $users;
+}// registeredUsers
+
+
 
 
 

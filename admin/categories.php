@@ -1,7 +1,11 @@
 <?php 
+ob_start();
 require_once '../include/db.inc.php';
 require_once '../include/class_autoloader.inc.php';
 require_once '../include/config.inc.php';
+require_once '../include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
+$msg = new \Plasticbrain\FlashMessages\FlashMessages();
+
 $admin = new Admin;
 if( !$admin -> checkIsUserAdmin()){
    
@@ -56,6 +60,7 @@ if( !$admin -> checkIsUserAdmin()){
 try {
 
 $categories = new Admin;
+
 if (count( $categories -> getAllBlogCategories() )> 0 ) {
 
 ?>
@@ -76,8 +81,36 @@ if (count( $categories -> getAllBlogCategories() )> 0 ) {
  <tr>
                                                 <td><?php echo $category['id']; ?></td>
                                                 <td><?php echo $category['name']; ?></td>
-                                                <td ><a href="">Edit </a></td>
-                                                <td ><a href="">Delete </a></td>
+                                           <td class="text-right">
+               <a href="edit-category.php?category_id=<?php echo $category['id'] ?>" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+        </td>
+        <td>
+
+<?php 
+
+if( isset($_POST['deleteBlogCategory'])){
+
+$admin = new Admin();
+$admin -> deleteBlogCategory($_GET['category_id']);
+
+
+}// main isset
+
+
+
+ ?>
+    <form action="?category_id=<?php echo $category['id'];?>" method="post">
+
+    
+    <button class="btn btn-outline-danger btn-rounded" name="deleteBlogCategory" type="submit" ><i class="fas fa-trash"></i></button>
+
+
+</form>
+
+
+
+               
+        </td>
                                                 
                                             </tr>
 <?php
@@ -122,3 +155,4 @@ if (count( $categories -> getAllBlogCategories() )> 0 ) {
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

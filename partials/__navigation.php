@@ -35,6 +35,7 @@ if( $logged -> checkIsUserLoggedIn()){
     <a class="dropdown-item" href="my-account.php">My account</a>
     <a class="dropdown-item" href="favourite-blog-posts.php">Favourite blog posts</a>
     <a class="dropdown-item" href="messages.php">Messages</a>
+    <a class="dropdown-item" href="users.php">Registered users</a>
     
 <?php 
 $admin = new User;
@@ -93,6 +94,15 @@ $userLogout -> userLogout();
 
  ?>
 
+<li class="nav-link">
+  
+<form action="search.php" method="get">
+  
+<input type="text" size="20" class="form-control form-control-sm" name="keyword">
+
+</form>
+
+</li>
 
 
 

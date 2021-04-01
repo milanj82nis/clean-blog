@@ -4,6 +4,14 @@ require_once 'include/class_autoloader.inc.php';
 require_once 'include/config.inc.php';
 require_once 'include/vendor/plasticbrain/php-flash-messages/src/FlashMessages.php';
 $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+$keyword = trim($_GET['keyword']);
+
+if( !isset($keyword) || strlen($keyword) < 5 ){
+
+  header('Location:index.php');
+  exit();
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +43,7 @@ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 <?php 
 $blog = new Blog;
 $user = new User;
-$posts = $blog -> getAllBlogPosts()['posts'];
+$posts = $blog -> searchBlog($keyword)['posts'];
 
 foreach($posts as $post ){
 
@@ -52,44 +60,11 @@ foreach($posts as $post ){
             </h3>
           </a>
           <p class="post-meta">Posted by
- <?php
-$user = new User();
-if( $user -> checkIsUserLoggedIn()){
-?>
-
-            <a href="
-
-<?php 
-$user_id = $post['user_id'];
-if( $user_id == $_SESSION['user_id']){
-?>
-my-account.php
-<?php
-
-} else {
-  ?>
-view-user.php?id=<?php echo $user_id; ?>
-  <?php
-}
- ?>
-">
+            <a href="user.php?slug=<?php  echo $user -> getUserDetails($post['user_id'])['slug']  ?>">
               
               <?php echo $user -> getUserDetails($post['user_id'])['name'] ?>
                 
               </a>
-
-<?php
-} else {
-
-?>
-<a href="view-user.php?id=<?php echo $post['user_id'] ?>"><?php echo $user -> getUserDetails($post['user_id'])['name'] ?></a>
-
-<?php
-}
-
-
- ?>          
-
             on <?php 
 $timeago = new get_timeago;
             echo $timeago -> timeago($post['created_at']); 
@@ -101,7 +76,7 @@ $timeago = new get_timeago;
 }// foreach
 
 if( count($posts ) > 0 ){
-$pages = $blog -> getAllBlogPosts()['pages'];
+$pages = $blog -> searchBlog($keyword)['pages'];
 
 ?>
 <nav aria-label="Page navigation example">
@@ -111,13 +86,13 @@ $pages = $blog -> getAllBlogPosts()['pages'];
 
 <?php
 for ( $x = 1 ;$x <= $pages ; $x++ ){
-$perPage = $blog -> getAllBlogPosts()['per-page'];
+$perPage = $blog -> searchBlog($keyword)['per-page'];
 
 ?>
 
 
 
- <li class="page-item"><a class="page-link" href="?page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
+ <li class="page-item"><a class="page-link" href="?keyword=<?php echo $keyword; ?>&page=<?php echo $x;?>&per-page=<?php echo $perPage;?>"><?php echo $x; ?></a></li>
 
 
 
