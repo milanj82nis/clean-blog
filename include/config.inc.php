@@ -3,19 +3,24 @@
 
 define( 'SITE_NAME' , 'Clean blog');
 
-define( 'ADMIN_NAME' , 'enter admin name here');
-define( 'ADMIN_EMAIL_ADDRESS' , 'enter admin email here');
+define( 'ADMIN_NAME' , 'enter_admin_name_here');
+define( 'ADMIN_EMAIL_ADDRESS' , 'enter_admin_email_here');
 
 
-define( 'RECAPTCHA_SITE_KEY' , '6LfgjpEaAAAAAMjDm7SR3zqbKGGUJAA8aGcjp9Wz');
-define( 'RECAPTCHA_SECRET_KEY' , '6LfgjpEaAAAAAN3Zia3HSviKHA9OAre4qHQbMVIB');
 
-define( 'PHP_MAILER_SERVER' , 'enter your phpmailer server here');
-define( 'PHP_MAILER_USERNAME' , 'enter your phpmailer username here');
-define( 'PHP_MAILER_PASSWORD' , 'enter your phpmailer password here');
+define( 'RECAPTCHA_SITE_KEY' , 'enter_recaptcha_site_key');
+define( 'RECAPTCHA_SECRET_KEY' , 'enter_recaptcha_secret_key');
 
-define( 'DISQUS_URL_CODE' , 'enter your disqus url code');
-define( 'DISQUS_SCRIPT_CODE' , 'enter your disqus script code');
+define( 'RECAPTCHA_SITE_KEY' , 'enter_your_recaptcha_site_key_here');
+define( 'RECAPTCHA_SECRET_KEY' , 'enter_your_recaptcha_secret_key_here');
+
+
+define( 'PHP_MAILER_SERVER' , 'enter_our_phpmailer_server_here');
+define( 'PHP_MAILER_USERNAME' , 'enter_your_phpmailer_username_here');
+define( 'PHP_MAILER_PASSWORD' , 'enter _your_phpmailer_password_here');
+
+define( 'DISQUS_URL_CODE' , 'enter_your_disqus_url_code');
+define( 'DISQUS_SCRIPT_CODE' , 'enter_your_disqus_script_code');
 
 
 
